@@ -15,7 +15,7 @@
                     <label class="form-control-label" for="username">Username</label>
 
                     
-                        <input class="form-control form-control-lg" id="username" name="username" required type="text" value="{{auth()->user()->username}}">
+                        <input class="form-control form-control-lg" id="username" name="username" type="text" value="{{old('username')}}">
                         @error('username')
                         <span style="color:red">{{$message}}</span>
                         @enderror
@@ -24,7 +24,7 @@
                 <div class='form-group'>
                     <label class="form-control-label" for="email">Email</label>
                     
-                        <input class="form-control form-control-lg" id="email" name="email" required type="text" value="{{auth()->user()->email}}">
+                        <input class="form-control form-control-lg" id="email" name="email" type="text" value="{{old('email')}}">
                         @error('email')
                         <span style="color:red">{{$message}}</span>
                         @enderror   

@@ -68,15 +68,25 @@ class UserController extends Controller
     public function update(Request $request) {
         $user = User::where('email', auth()->user()->email)->first();
 
-        // $formFields = [
-        //     'username' => $request->username,
-        //     'email' => $request->email
-        // ];
 
-        $formFields = $request->validate([
-            'username' => ['required', 'min:3', Rule::unique('users', 'username')],
-            'email' => ['required', 'email'],
-        ]);
+        if($request->filled('email') && $request->filled('username')) {
+            $formFields = $request->validate([
+                'username' => ['min:3', Rule::unique('users', 'username')],
+                'email' => ['email', Rule::unique('users', 'email')]
+            ]);
+        }
+
+        if($request->filled('email')) {
+            $formFields = $request->validate([
+                'email' => ['email', Rule::unique('users', 'email')],
+            ]);
+        }
+
+        if($request->filled('username')) {
+            $formFields = $request->validate([
+                'username' => ['min:3', Rule::unique('users', 'username')],
+            ]);
+        }
 
         if($request->hasFile('pic')) {
             $formFields['pic'] = $request->file('pic')->store('pics', 'public');
